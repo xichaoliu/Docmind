@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/docmind
+    username: postgres
+    password: ${DB_PASSWORD:postgres}
+  task:
+    execution:
+      thread-name-prefix: doc-ingest-
+      pool:
+        core-size: 2
+        max-size: 4
+        queue-capacity: 20
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true   # ??? snake_case ????? Java ? camelCase
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # ?????? SQL?????
+  global-config:
+    db-config:
+      id-type: assign_uuid    # ??????????? UUID ???
+logging:
+  level:
+    org.springframework.web: DEBUG
+python-service:
+  base-url: ${PYTHON_SERVICE_URL:http://localhost:8000}
+  timeout-minutes: ${PYTHON_SERVICE_TIMEOUT:10}
+app:
+  upload-dir: ${UPLOAD_DIR:./uploads}
+  jwt:
+    # HS256 要求 secret 至少 32 字节，否则应用启动就会失败
+    secret: ${JWT_SECRET:docmind-dev-secret-please-change-me-32bytes-min}
+    expiration-hours: ${JWT_EXPIRE_HOURS:72}

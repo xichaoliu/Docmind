@@ -1,0 +1,14 @@
+backend-java|初始化 Spring Boot 3 + WebFlux + PostgreSQL（MyBatis-Plus），建表 document/conversation/message
+backend-java|用 WebClient 封装对 Python 的调用（含超时配置）
+backend-java|POST /api/chat SSE 透传：转发流给前端，同时累积文本，结束后把回答和引用存库
+backend-java|会话 CRUD 和历史消息接口
+backend-java|历史对话传给 Python：Python 侧 prompt 加 MessagesPlaceholder(history)，接口入参加 history
+backend-java|统一异常处理；Python 或 Ollama 不可用时返回明确错误，前端能展示
+backend-java|配置 CORS，前端改为连 Java；Python 接口不再对外开放
+frontend|前端接入 TanStack Query：会话列表、历史消息
+backend-java|Java：文档上传接口，存文件、写记录（状态 PROCESSING）
+backend-java|Java 调 Python /internal/ingest，按结果流转状态 READY / FAILED
+backend-java|Java：文档列表接口；删除时先调 Python 清索引，再删自己的记录
+ai-python|Python：入库按后缀选择 loader，支持 PDF 和 Word
+frontend|前端：文档管理页（上传、列表、状态标签），用 TanStack Query 的 refetchInterval 轮询处理状态
+frontend|前端：对话时可选择"针对哪些文档提问"（Python 检索加 doc_id 过滤）

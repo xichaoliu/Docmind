@@ -1,0 +1,63 @@
+# docker-compose.yml（项目根目录）
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=docmind
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?POSTGRES_PASSWORD 必须设置在 .env 文件中}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./gateway/src/main/resources/sql/schema.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  rag-service:
+    build: ./rag
+    # ports:
+    #   - "8000:8000"
+    volumes:
+      - ${FAISS_INDEX_DIR?FAISS_INDEX_DIR 必须设置在 .env 文件中}:/app/faiss_index
+      - ${EMBEDDING_MODEL_HOST_PATH?EMBEDDING_MODEL_HOST_PATH 必须设置在 .env 文件中}:/app/models:ro
+      - shared-uploads:/app/uploads
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - EMBEDDING_MODEL_PATH=/app/models
+      - FAISS_INDEX_DIR=/app/faiss_index
+
+  gateway:
+    build: ./gateway
+    # ports:
+    #   - "8080:8080"
+    depends_on:
+      - postgres
+      - rag-service
+    volumes:
+      - shared-uploads:/app/uploads
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/docmind
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - PYTHON_SERVICE_URL=http://rag-service:8000
+      - UPLOAD_DIR=/app/uploads
+      - JWT_SECRET=${JWT_SECRET?JWT_SECRET 必须设置在 .env 文件中}
+
+  web:
+    build: 
+      context: ./web
+      args:
+        - VITE_API_BASE_URL=
+    ports:
+      - "5173:80"
+    volumes:
+      - ./web/nginx/templates:/etc/nginx/templates:ro
+    environment:
+      - BACKEND_URL=http://gateway:8080
+      - NGINX_ENVSUBST_FILTER=BACKEND_URL 
+    depends_on:
+      - gateway
+
+
+volumes:
+  pgdata:
+  shared-uploads:

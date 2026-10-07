@@ -1,0 +1,45 @@
+{"id": 1, "type": "pronoun", "turns": ["软件里的字体可以嵌入到我的文档里吗？"], "test_question": "那有什么限制？", "gold": ["字体册", "嵌入限制"], "note": "第 2E 条"}
+{"id": 2, "type": "pronoun", "turns": ["系统声音我能用在自己的视频里吗？"], "test_question": "那能公开分享吗？", "gold": ["非商业", "公开共享"], "note": "第 2F 条"}
+{"id": 3, "type": "pronoun", "turns": ["照片 app 里的幻灯片素材能商用吗？"], "test_question": "那能单独提取出来吗？", "gold": ["数字材料"], "note": "第 2G 条"}
+{"id": 4, "type": "pronoun", "turns": ["内容缓存功能怎么关闭？"], "test_question": "具体在哪儿设置？", "gold": ["系统设置", "共享"], "note": "第 2H 条"}
+{"id": 5, "type": "pronoun", "turns": ["远程桌面最多允许几台设备连接？"], "test_question": "那如果只是看，不操作呢？", "gold": ["观察"], "note": "第 2I 条"}
+{"id": 6, "type": "pronoun", "turns": ["备份副本可以复制几份？"], "test_question": "那它包不包括？", "gold": ["Boot ROM"], "note": "第 2K 条"}
+{"id": 7, "type": "pronoun", "turns": ["软件可以转让给别人吗？"], "test_question": "需要满足什么条件？", "gold": ["连同", "硬件"], "note": "第 4A 条"}
+{"id": 8, "type": "pronoun", "turns": ["协议终止之后还有哪些条款有效？"], "test_question": "这个写在协议哪儿？", "gold": ["5、6、7、8、9、11、12 和 13"], "note": "第 7 条"}
+{"id": 9, "type": "pronoun", "turns": ["开源组件修改后还能转让吗？"], "test_question": "为什么不行？", "gold": ["2M"], "note": "第 4B 条"}
+{"id": 10, "type": "pronoun", "turns": ["人工智能生成的内容我能拿去商用吗？"], "test_question": "那能拿去训练别的模型吗？", "gold": ["训练、微调"], "note": "第 6E 条"}
+{"id": 11, "type": "pronoun", "turns": ["政府最终用户适用哪些条款？"], "test_question": "依据的是哪个法规？", "gold": ["48 C.F.R."], "note": "第 11A 条"}
+{"id": 12, "type": "pronoun", "turns": ["Gracenote 是怎么统计查询的？"], "test_question": "用什么做标识？", "gold": ["唯一标识符"], "note": "第 14H 条"}
+{"id": 13, "type": "pronoun", "turns": ["航班数据我能转发给别人吗？"], "test_question": "那它是谁生成的？", "gold": ["联邦航空局"], "note": "第 14F 条"}
+{"id": 14, "type": "pronoun", "turns": ["日本用户的责任限制有例外吗？"], "test_question": "什么情况下不适用？", "gold": ["故意不当行为或重大疏忽"], "note": "日本补充条款"}
+
+{"id": 15, "type": "ellipsis", "turns": ["系统字符可以用在商业项目里吗？"], "test_question": "智绘表情呢？", "gold": ["系统字符", "非商业"], "note": "第 2R 条"}
+{"id": 16, "type": "ellipsis", "turns": ["出租 Apple 软件有什么要求？"], "test_question": "最短期限呢？", "gold": ["二十四"], "note": "第 3A 条"}
+{"id": 17, "type": "ellipsis", "turns": ["软件转让需要什么条件？"], "test_question": "要连硬件一起吗？", "gold": ["连同"], "note": "第 4A 条"}
+{"id": 18, "type": "ellipsis", "turns": ["这份协议由哪里的法律管辖？"], "test_question": "英国用户呢？", "gold": ["英国消费者", "居住地"], "note": "第 12 条"}
+{"id": 19, "type": "ellipsis", "turns": ["出口管制都有哪些限制？"], "test_question": "名单呢？", "gold": ["特别指定国民"], "note": "第 10 条"}
+{"id": 20, "type": "ellipsis", "turns": ["HIPAA 相关的限制是什么？"], "test_question": "能传健康信息吗？", "gold": ["受保护的健康信息"], "note": "第 11B 条"}
+{"id": 21, "type": "ellipsis", "turns": ["MPEG-4 的授权范围是什么？"], "test_question": "H.264 呢？", "gold": ["AVC"], "note": "第 14D 条"}
+{"id": 22, "type": "ellipsis", "turns": ["AMR 编解码不能用在什么地方？"], "test_question": "电话产品呢？", "gold": ["蜂窝话音"], "note": "第 14E 条"}
+{"id": 23, "type": "ellipsis", "turns": ["雅虎搜索在哪些地区可以使用？"], "test_question": "中国大陆能用吗？", "gold": ["中国大陆"], "note": "第 15 条"}
+{"id": 24, "type": "ellipsis", "turns": ["韩国的定位服务条款都说了什么？"], "test_question": "数据要保留多久？", "gold": ["6 个月"], "note": "韩国补充条款"}
+{"id": 25, "type": "ellipsis", "turns": ["英国对非法内容是怎么处理的？"], "test_question": "严重非法内容指哪些？", "gold": ["恐怖主义"], "note": "英国补充条款"}
+{"id": 26, "type": "ellipsis", "turns": ["字体的嵌入限制在哪儿查看？"], "test_question": "字体册吗？", "gold": ["字体册"], "note": "第 2E 条"}
+{"id": 27, "type": "ellipsis", "turns": ["实时字幕能用在商业场景吗？"], "test_question": "个人语音呢？", "gold": ["个人语音"], "note": "第 2F 条"}
+{"id": 28, "type": "ellipsis", "turns": ["Apple 软件可以装在非 Apple 电脑上吗？"], "test_question": "虚拟机环境呢？", "gold": ["虚拟"], "note": "第 2B 条"}
+
+{"id": 29, "type": "continuation", "turns": ["责任限制的金额上限是多少？"], "test_question": "还有别的例外吗？", "gold": ["人身伤害"], "note": "第 9 条"}
+{"id": 30, "type": "continuation", "turns": ["协议里关于人工智能的条款说了什么？"], "test_question": "还有别的禁止事项吗？", "gold": ["水印"], "note": "第 6E 条"}
+{"id": 31, "type": "continuation", "turns": ["内容缓存功能有什么使用限制？"], "test_question": "还有别的吗？", "gold": ["家庭、公司或组织"], "note": "第 2H 条"}
+{"id": 32, "type": "continuation", "turns": ["软件许可有哪几种获取方式？"], "test_question": "还有别的吗？", "gold": ["批量"], "note": "第 2C 条"}
+{"id": 33, "type": "continuation", "turns": ["Apple 会自动给我的系统装更新吗？"], "test_question": "那我要怎么关掉？", "gold": ["后台安全改进"], "note": "第 2Q 条"}
+{"id": 34, "type": "continuation", "turns": ["协议里的第三方确认都包括哪些？"], "test_question": "还有哪几家？", "gold": ["Adobe"], "note": "第 14G 条"}
+{"id": 35, "type": "continuation", "turns": ["我的位置信息会发送给 Apple 吗？"], "test_question": "那会保留多久？", "gold": ["24 小时"], "note": "韩国补充条款"}
+{"id": 36, "type": "continuation", "turns": ["澳大利亚用户有哪些额外权益？"], "test_question": "受什么法律保护？", "gold": ["澳大利亚消费者权益保护法"], "note": "澳大利亚补充条款"}
+
+{"id": 37, "type": "control", "turns": [], "test_question": "软件许可协议里的责任上限是多少钱？", "gold": ["250"], "note": "第 9 条｜对照组：自包含可检索"}
+{"id": 38, "type": "control", "turns": [], "test_question": "这份协议受哪个州的法律管辖？", "gold": ["加利福尼亚"], "note": "第 12 条｜对照组"}
+{"id": 39, "type": "control", "turns": [], "test_question": "内容缓存功能在哪里可以关闭？", "gold": ["系统设置"], "note": "第 2H 条｜对照组"}
+{"id": 40, "type": "control", "turns": [], "test_question": "出租 Apple 软件的最短期限是多少？", "gold": ["二十四"], "note": "第 3A 条｜对照组"}
+{"id": 41, "type": "control", "turns": [], "test_question": "备份副本包不包括 Boot ROM？", "gold": ["Boot ROM"], "note": "第 2K 条｜对照组"}
+{"id": 42, "type": "control", "turns": [], "test_question": "Apple 软件可以转让给第三方吗？", "gold": ["连同"], "note": "第 4A 条｜对照组"}

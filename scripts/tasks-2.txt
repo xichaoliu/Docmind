@@ -1,0 +1,79 @@
+# 二期任务清单
+#
+# 每行一个任务，用竖线分隔成「标签 / 标题」两段。
+# 标签取 scripts/import.sh 里已创建的五个之一：
+#   backend-java / ai-python / frontend / infra / docs
+#
+# 不含竖线的行会被 import.sh 静默跳过，所以可以当注释和分组标题用。
+# （注意：本文件里除任务行外，任何一行都不要出现竖线，否则会被当成任务。）
+#
+# 导入：把 scripts/import.sh 里的 `done < tasks.txt` 改成 `done < tasks-2.txt` 后执行。
+# 顺序按 docs/roadmap.md 的「二期实施顺序」排列。
+
+# ------------------------------------------------------------
+# 2.0 先修：评测前置（不修则评测结果不可信）
+# ------------------------------------------------------------
+ai-python|Python：删除 condenseChain.py 重复定义，统一读 config 的 OLLAMA 配置
+backend-java|Java：加 @EnableAsync 并配置线程池，让入库真正异步
+infra|对账脚本：比对 DB / faiss_index / uploads 差异，支持 --apply 清理
+ai-python|Python：load_store() 加进程内缓存，ingest 或 delete 后失效
+ai-python|Python：ingest 时把文件名写入 chunk metadata，citations 带出来源
+
+# ------------------------------------------------------------
+# 2.1 鉴权 + 数据隔离（方案见 docs/auth-design.md）
+# ------------------------------------------------------------
+backend-java|Java：建 sys_user 表，实现注册、登录、me 三个接口
+backend-java|Java：AuthInterceptor + UserContext 拦截 /api/**，白名单 login 和 register
+backend-java|Java：conversation 和 document 加 user_id，按 id 校验归属（越权返 404）
+backend-java|Java：冻结 docIds 契约，永远传显式授权列表，不再传 null
+backend-java|Java：PythonDocServiceClient 的所有调用带上内网 token 请求头
+ai-python|Python：/internal/** 加共享密钥校验；空 docIds 短路为「知识库为空」
+frontend|前端：登录注册页 + authStore，client.ts 注入 token 并处理 401
+frontend|前端：两处裸 fetch 补 Authorization（文件上传、SSE 流）
+frontend|前端：路由守卫 + 个人页（显示当前用户、退出登录）
+docs|文档：README 写明 rag 服务的 /internal/** 不能直接对外
+
+# ------------------------------------------------------------
+# 数据清理与评测基线（数据从这一步起才稳定）
+# ------------------------------------------------------------
+infra|清理历史孤儿数据，重置数据库并上传最终语料
+ai-python|Python：建 rag/eval/，写 20 题分层评测集（含 ground truth）
+ai-python|Python：写评测脚本，输出 Recall@k、MRR、命中率、检索延迟
+ai-python|Python：在数据稳定后跑基线并存 baseline.json
+
+# ------------------------------------------------------------
+# 2.2 混合检索
+# ------------------------------------------------------------
+ai-python|Python：加 jieba 和 rank_bm25 依赖，入库时同步构建关键词索引
+ai-python|Python：实现 RRF 融合向量与关键词两路结果，跑分对比基线
+
+# ------------------------------------------------------------
+# 2.3 重排序
+# ------------------------------------------------------------
+ai-python|Python：接入 bge-reranker，粗排召回 20 再精排取 4
+ai-python|Python：记录 rerank 前后端到端延迟，写入评测表格
+
+# ------------------------------------------------------------
+# 2.4 多文档过滤
+# ------------------------------------------------------------
+ai-python|Python：调大 FAISS fetch_k，修复带 filter 时返回不足 k 条
+frontend|前端：文档管理页勾选「在这些文档里检索」，选择持久化到会话
+
+# ------------------------------------------------------------
+# 2.6 ~ 2.12 其余优化
+# ------------------------------------------------------------
+ai-python|Python：chunk 策略优化（按标题或段落切），作为评测扫参项
+ai-python|Python：检索分数阈值，低于阈值直接拒答，降低幻觉
+ai-python|Python：配置外置（chunk_size、k、模型名）到 app/config.py
+ai-python|Python：结构化检索日志（改写后问题、召回 chunk、分数、耗时）
+ai-python|Python：补检索层单测
+backend-java|Java：deleteDocument 移出事务内的外部 HTTP 调用
+backend-java|Java：修复 DocumentController.getById 路径变量类型错误（Long 改 String）
+backend-java|Java：补 AuthService 单测（注册、登录、密码错误、用户名重复）
+infra|CI：GitHub Actions 跑 gateway 编译测试和 rag 语法检查
+infra|评估向量库迁移（FAISS 换 Chroma 或 pgvector），如需要则与 2.1 合并做
+frontend|前端：引用卡片展示来源文件名并可展开原文
+frontend|前端：citations 改为流式发出，不再等生成结束
+frontend|前端：回答反馈（点赞点踩）收集 badcase
+docs|文档：README 补评测结果对比表格
+docs|文档：README 完善（架构图、启动步骤、关键取舍）

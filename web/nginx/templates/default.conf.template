@@ -1,0 +1,16 @@
+# web/nginx.conf
+server {
+    listen 80;
+    client_max_body_size 100M;
+    location / {
+        root /usr/share/nginx/html;
+        try_files $uri $uri/ /index.html;
+    }
+    location /api/ {
+        proxy_pass ${BACKEND_URL};
+    }
+    location /api/chat {
+        proxy_pass ${BACKEND_URL};
+        proxy_buffering off;  # 禁用缓冲
+    }
+}
