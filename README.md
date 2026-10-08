@@ -90,7 +90,7 @@ docmind-rag/
 ### 启动
 
 ```bash
-git clone https://github.com/xichaoliu/docmind-rag.git
+git clone https://gitee.com/haweir/docmind  # 或 git clone https://github.com/xichaoliu/Docmind
 cd docmind-rag
 
 cp .env.example .env   # 按需修改 JWT_SECRET 等配置
