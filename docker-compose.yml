@@ -24,6 +24,10 @@ services:
       - OLLAMA_HOST=http://host.docker.internal:11434
       - EMBEDDING_MODEL_PATH=/app/models
       - FAISS_INDEX_DIR=/app/faiss_index
+      - FETCH_K=1000
+      - HYBRID_ENABLED=true
+      - RERANK_ENABLED=true
+      - RERANKER_MODEL=BAAI/bge-reranker-base
 
   gateway:
     build: ./gateway

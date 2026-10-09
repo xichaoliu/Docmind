@@ -51,7 +51,7 @@
 
 检索（向量相似度召回相关片段）→ 拼装（按模板组织资料与规则）→ 生成（模型基于资料流式作答），三步串联，模型被严格约束"只使用资料中的信息"，资料不足时明确回答"资料未提供相关信息"而非编造。多轮对话场景下，追问会先经过一次低温度的改写（condense question），把"它有什么优点？"这类指代消解为可独立检索的完整问题。
 
-详见 [`docs/rag-concepts.md`](docs/rag-concepts.md)。
+检索部分，支持混合检索（`HYBRID_ENABLED=true`）和重排序(`RERANK_ENABLED=true`)，前者在召回阶段就已过滤掉无关文档，后者则在检索结束后对所有结果再做一次排序。
 
 ### 2. SSE 流式问答与透传
 
@@ -90,7 +90,7 @@ docmind-rag/
 ### 启动
 
 ```bash
-git clone https://gitee.com/haweir/docmind  # 或 git clone https://github.com/xichaoliu/Docmind
+git clone https://gitee.com/haweir/docmind.git  # 或 git clone https://github.com/xichaoliu/Docmind.git
 cd docmind-rag
 
 cp .env.example .env   # 按需修改 JWT_SECRET 等配置

@@ -4,12 +4,8 @@ from pathlib import Path
 
 from langchain_community.document_loaders import TextLoader, PyPDFLoader, Docx2txtLoader
 from langchain_community.vectorstores import FAISS
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.runnables import RunnablePassthrough
-from langchain_ollama import OllamaLLM
-from langchain_ollama import ChatOllama
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores.faiss import DistanceStrategy
 
 from app.config import (
     EMBEDDING_MODEL_PATH,
@@ -45,14 +41,20 @@ def ingest(file_path: str, doc_id: str, user_id: str | None) -> int:
     chunks = splitter.split_documents(docs)
     for i, c in enumerate(chunks):
         c.metadata.update({"doc_id": doc_id, "chunk_index": i, "user_id": user_id})
-    FAISS.from_documents(chunks, embeddings).save_local(str(INDEX_ROOT / doc_id))
+    db = FAISS.from_documents(
+                        chunks, 
+                        embeddings,  
+                        distance_strategy=DistanceStrategy.MAX_INNER_PRODUCT, # 使用内积
+                        normalize_L2=True # 归一化
+                        )
+    db.save_local(str(INDEX_ROOT / doc_id))
     return len(chunks)
 
 def delete_doc(doc_id: str) -> None:
     shutil.rmtree(INDEX_ROOT / doc_id, ignore_errors=True)
 
 def load_store():
-    """把所有文档的索引合并成一个，没有文档时返回 None。"""
+    """把所有文档的faiss索引合并成一个，没有文档时返回 None。"""
     store = None
     if not INDEX_ROOT.exists():
         return None
@@ -68,19 +70,6 @@ def load_store():
 
 
 
-def get_retriever(k: int = 4, doc_ids: list[str]  | None = None, user_id: str | None = None):
-    """每次调用时从当前的 store 生成一个 retriever。"""
-    store = load_store()
-    if store is None:
-        return None
-    search_kwargs = {"k": k, "fetch_k": FETCH_K,}
-    # 收集所有过滤条件，最后统一组合，避免覆盖
-    filters = []
-    if doc_ids is not None:                    # ← 区分 None 和 []
-        allowed = set(doc_ids)                 # ← set 查找 O(1)，也避免闭包捕获可变对象
-        filters.append(lambda meta: meta.get("doc_id") in allowed)
-    if user_id is not None:
-        filters.append(lambda meta: meta.get("user_id") == user_id)
-    if filters:
-        search_kwargs["filter"] = lambda meta: all(f(meta) for f in filters)
-    return store.as_retriever(search_kwargs=search_kwargs)
+
+
+

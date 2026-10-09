@@ -4,7 +4,7 @@ from langchain_core.messages import HumanMessage, AIMessage
 
 from app.chains import qa_chain, format_docs
 from app.condenseChain import condense_chain
-from app.services.document_service import get_retriever
+from app.services.retriever_service import get_retriever
 
 import logging
 logger = logging.getLogger(__name__)
@@ -39,9 +39,9 @@ def to_lc_messages(history):
         for m in history
     ]
 
+"""检索 + 流式生成,是一个生成器,逐块产出 (事件类型, 数据)。"""
 def answer_stream(question: str, history=None, doc_ids=None, user_id=None):
     history = history or []
-    """检索 + 流式生成,是一个生成器,逐块产出 (事件类型, 数据)。"""
     retriever = get_retriever(doc_ids=doc_ids, user_id=user_id)
 
     if retriever is None:
